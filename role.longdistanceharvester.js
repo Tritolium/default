@@ -4,13 +4,11 @@ module.exports = {
         // if creep is bringing energy to a structure but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
             // switch state
-            console.log('working=false');
             creep.memory.working = false;
         }
             // if creep is harvesting energy but is full
         else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
             // switch state
-            console.log('working=true');
             creep.memory.working = true;
         }
 
@@ -18,15 +16,20 @@ module.exports = {
         if (creep.memory.working == true) {
             // if in home room
             if (creep.room.name == creep.memory.home) {
-                console.log('home');
+				// move to flag
+				if(creep.pos == Game.flags['E92N53_0'].pos){
+					creep.memory.flag = true;
+				}
+				if(!creep.memory.flag){
+					creep.moveTo(Game.flags['E92N53_0'];
+				}
                 // find closest spawn, extension or tower which is not full
                 var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                     // the second argument for findClosestByPath is an object which takes
                     // a property called filter which can be a function
                     // we use the arrow operator to define it
                     filter: (s) => (s.structureType == STRUCTURE_SPAWN
-                                 || s.structureType == STRUCTURE_EXTENSION
-                                 || s.structureType == STRUCTURE_TOWER)
+                                 || s.structureType == STRUCTURE_EXTENSION)
                                  && s.energy < s.energyCapacity
                 });
 
@@ -41,7 +44,6 @@ module.exports = {
             }
                 // if not in home room...
             else {
-                //console.log('target');
                 // find exit to home room
                 var exit = creep.room.findExitTo(creep.memory.home);
                 // and move to exit
@@ -52,8 +54,13 @@ module.exports = {
             // if creep is supposed to harvest energy from source
         else {
             // if in target room
-            //creep.moveTo(Game.flags.E92N54_0.pos);
             if (creep.room.name == creep.memory.target) {
+				if(creep.pos == Game.flags['E92N54_0'].pos){
+					creep.memory.flag = true;
+				}
+				if(!creep.memory.flag){
+					creep.moveTo(Game.flags['E92N54_0'];
+				}
                 // find source
                 var source = creep.room.find(FIND_SOURCES)[creep.memory.sourceIndex];
 
