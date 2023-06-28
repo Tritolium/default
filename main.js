@@ -17,7 +17,7 @@ module.exports.loop = function () {
 	console.log(bucket);
 
 	Game.rooms.E44S33.memory.properties = {
-		minBuilder: 3,
+		minBuilder: 2,
 		minUpgrader: 2,
 		minRepairer: 1,
 		minDistanceHarvester: 3,
@@ -25,6 +25,7 @@ module.exports.loop = function () {
 		distanceHarvest: true,
 
 		harvestTargets: [
+			'E44S32'
 		]
 	}
     if(bucket > 1000)
