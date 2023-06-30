@@ -25,7 +25,9 @@ module.exports.loop = function () {
 		distanceHarvest: true,
 
 		harvestTargets: [
-			'E44S32'
+			'E44S32',
+			'E43S33',
+			'E44S33'
 		]
 	}
     if(bucket > 1000)
