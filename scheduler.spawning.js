@@ -21,10 +21,6 @@ module.exports = {
         //harvester
         var room = Game.rooms[room_name]
         
-        if(room.find(FIND_HOSTILE_CREEPS)){
-            room.memory.buffer = ['defender']
-        }
-        
         for(let source of room.find(FIND_SOURCES)){
             var harvester = _.filter(Game.creeps, (creep) => 
                 creep.memory.role == 'harvester' &&
