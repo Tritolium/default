@@ -8,8 +8,10 @@ var roleUpgrader = {
 				if(!creep.memory.path){
 					creep.memory.path = creep.pos.findPathTo(creep.room.controller);
 					if(creep.room.find(FIND_CONSTRUCTION_SITES).length < 3){
+						const terrain = new Room.Terrain(creep.memory.home)
 					    for(point of creep.memory.path){
-						    creep.room.createConstructionSite(point.x, point.y, STRUCTURE_ROAD);
+							if(terrain.get(point.x, point.y) !== TERRAIN_MASK_WALL)
+						    	creep.room.createConstructionSite(point.x, point.y, STRUCTURE_ROAD);
 				        }
 					}
 				}
