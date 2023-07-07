@@ -214,7 +214,6 @@ module.exports = function() {
 			body.push(WORK);
 		}
 		body.push(CARRY);
-		body.push(MOVE);
 		body.push(MOVE)
 
 		return this.createCreep(body, undefined, {role: 'harvester', home: this.room.name, working: false, source: sourceId});
