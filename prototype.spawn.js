@@ -39,7 +39,7 @@ module.exports = function() {
 					ret = this.spawnHarvesterCreep(source.id)
 					console.log(ret)
 					if(ret === -6){
-						console.log('not enough resources')
+						console.log('harvester: not enough resources')
 					    harvester = _.filter(Game.creeps, (creep) => creep.memory.role =='harvester' && creep.memory.home == this.room.name);
 					    if(!harvester.length){
 							console.log('no harvesters')
@@ -88,7 +88,7 @@ module.exports = function() {
 				for(let room of this.room.memory.properties.harvestTargets){
 					distanceHarvester = _.filter(Game.creeps, (creep) => creep.memory.role == 'distanceHarvester' && creep.memory.homeRoom == spawn.room.name && creep.memory.targetRoom == room);
 					if(distanceHarvester.length < this.room.memory.properties.minDistanceHarvester){
-						spawn.createDistanceHarvester(energy,Math.floor(energy/300),spawn.room.name,room);
+						console.log('distanceHarvester: ' + this.createDistanceHarvester(energy,Math.floor(energy/300),spawn.room.name,room));
 						return;
 					}
 				}
