@@ -15,6 +15,9 @@ module.exports = {
 					case ERR_INVALID_TARGET:
 						creep.memory.target = undefined
 						break
+					case ERR_NO_BODYPART:
+						creep.suicide()
+						break
 				}
 		            
 		    }
