@@ -13,13 +13,15 @@ module.exports = function() {
 		var disBuilder = _.filter(Game.creeps, (creep) => creep.memory.role == 'distanceBuilder');
 		
 		var claimer = _.filter(Game.creeps, (creep) => creep.memory.role == 'claimer');
+
+		var defender = _.filter(Game.creeps, (creep) => creep.memory.role == 'defender' && creep.memory.targetRoom == this.room.name);
 		
 		if(this.memory.properties == undefined)
 		    this.memory.properties = {}
 		
 		if(this.spawning == null/* && this.memory.spawn == true*/){			//when Spawn is idle and allowed to spawn
 			
-			if (this.room.find(FIND_HOSTILE_CREEPS).length > 0) {
+			if (this.room.find(FIND_HOSTILE_CREEPS).length > 0 && defender.length < 2) {
 				console.log('Stopping all spawnactivity, defending');
 				this.createCreep([TOUGH,TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE], undefined, {role: 'defender', targetRoom: this.room.name});
 				return;
