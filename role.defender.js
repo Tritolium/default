@@ -17,10 +17,7 @@ module.exports = {
 						break
 				}
 		            
-		    } else {
-				Memory.roomAlert = undefined;
-				creep.suicide();
-			}
+		    }
 		} else{
 			creep.moveToTargetRoom();
 		}
