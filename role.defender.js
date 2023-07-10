@@ -8,8 +8,15 @@ module.exports = {
 				}
 		    }
 		    if(creep.memory.target != undefined){
-		        if(creep.attack(Game.getObjectById(creep.memory.target)) == ERR_NOT_IN_RANGE)
-		            creep.moveTo(Game.getObjectById(creep.memory.target));
+		        switch(creep.attack(Game.getObjectById(creep.memory.target))){
+					case ERR_NOT_IN_RANGE:
+						creep.moveTo(Game.getObjectById(creep.memory.target))
+						break
+					case ERR_INVALID_TARGET:
+						creep.memory.target = undefined
+						break
+				}
+		            
 		    } else {
 				Memory.roomAlert = undefined;
 				creep.suicide();
