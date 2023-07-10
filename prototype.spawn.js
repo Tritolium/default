@@ -23,7 +23,12 @@ module.exports = function() {
 			
 			if (this.room.find(FIND_HOSTILE_CREEPS).length > 0 && defender.length < 2) {
 				console.log('Stopping all spawnactivity, defending');
-				this.createCreep([TOUGH,TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE], undefined, {role: 'defender', targetRoom: this.room.name});
+				let energyavailable = this.room.energyAvailable
+				let parts = Math.floor(energyavailable/190)
+				let body = []
+				for(let i = 0; i < parts; i++)
+					body.push(TOUGH,ATTACK,MOVE,MOVE)
+				this.createCreep(body, undefined, {role: 'defender', targetRoom: this.room.name});
 				return;
 			}
 			
