@@ -18,13 +18,12 @@ module.exports = function() {
 		    this.memory.properties = {}
 		
 		if(this.spawning == null/* && this.memory.spawn == true*/){			//when Spawn is idle and allowed to spawn
-			/*
-			if (Memory.roomAlert != undefined) {
+			
+			if (this.room.find(FIND_HOSTILE_CREEPS) {
 				console.log('Stopping all spawnactivity, defending');
-				this.createCreep([TOUGH,TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE], undefined, {role: 'defender'});
+				this.createCreep([TOUGH,TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE], undefined, {role: 'defender', targetRoom: this.room});
 				return;
 			}
-			*/
 			
 			//harvester
 			/**
