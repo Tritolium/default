@@ -19,9 +19,9 @@ module.exports = function() {
 		
 		if(this.spawning == null/* && this.memory.spawn == true*/){			//when Spawn is idle and allowed to spawn
 			
-			if (this.room.find(FIND_HOSTILE_CREEPS)) {
+			if (this.room.find(FIND_HOSTILE_CREEPS).length > 0) {
 				console.log('Stopping all spawnactivity, defending');
-				this.createCreep([TOUGH,TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE], undefined, {role: 'defender', targetRoom: this.room});
+				this.createCreep([TOUGH,TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE], undefined, {role: 'defender', targetRoom: this.room.name});
 				return;
 			}
 			
