@@ -191,6 +191,9 @@ module.exports = function() {
 			//}
 			
 			//if this point is reached, spawn remains idle;
+			if(!this.memory.stats)
+							this.memory.stats = {}
+			
 			if(!this.memory.stats.idle){
 			    this.memory.stats.idle = 0
 			}
