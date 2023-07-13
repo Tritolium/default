@@ -62,12 +62,11 @@ module.exports = function() {
 			var containerarray = this.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_CONTAINER}});
 			for (container of containerarray) {
 				let carrier = _.filter(Game.creeps, (creep) => creep.memory.role == 'carrier' && creep.memory.home == this.room.name && creep.memory.container == container.id);
-				if(carrier.length < 1) {
-				    if(energy > 500){
-				        this.createCarrier(500, this.room.name, container.id);
-				    } else {
-				        this.createCarrier(energy, this.room.name, container.id);
-				    }
+				if(this.room.memory.evaluation === undefined || this.room.memory.evaluation.containers[container.id] === undefined)
+					break
+				if(carrier.length < this.room.memory.evaluation.containers[container.id].maxCarrier) {
+				    this.createCarrier(this.room.memory.evaluation.containers[container.id].body * 100, this.room.name, container.id);
+				    
 				    /**
 					if(this.createCarrier(this.room.energyCapacityAvailable, this.room.name, container.id) == ERR_NOT_ENOUGH_ENERGY) {
 						let allcarrier = _.filter(Game.creeps, (creep) => creep.memory.role == 'carrier' && creep.memory.home == this.room.name);
@@ -199,6 +198,42 @@ module.exports = function() {
 			}
 			this.memory.stats.idle++
 			console.log('idle')
+
+			// perform evaluation
+			if(!this.room.memory.evaluation)
+				this.room.memory.evaluation = {}
+			
+			if(!this.room.memory.evaluation.containers)
+				this.room.memory.evaluation.containers = {}
+			
+			let containerlist = this.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_CONTAINER}})
+			let maxCarryParts = Math.floor(this.room.energyCapacityAvailable/100)
+			maxCarryParts = Math.min(maxCarryParts, 5)
+
+			for(container of containerlist){
+				if(this.room.memory.evaluation.containers[container.id] === undefined){
+					// calc distance from container to spawn
+					let path = PathFinder.search(container.pos, {pos: this.pos, range: 1}, {swampCost: 1}).path
+					let source = container.pos.findInRange(FIND_SOURCES, 3).length > 0
+					this.room.memory.evaluation.containers[container.id] = {distance: path.length, source: source}
+				}
+
+				let stats = this.room.memory.evaluation.containers[container.id]
+				stats.carryparts = Math.ceil(stats.distance * 0.4)
+				if(stats.source){
+					if(maxCarryParts >= stats.carryparts){
+						stats.maxCarrier = 1
+						stats.body = stats.carryparts
+					} else {
+						stats.maxCarrier = Math.ceil(stats.carryparts/maxCarryParts)
+						stats.body = Math.ceil(stats.carryparts/stats.maxCarrier)
+					}
+				} else {
+					stats.maxCarrier = 1
+					stats.body = Math.min(stats.carryparts, maxCarryParts)
+				}
+				
+			}
 		} else {
 			if(!this.memory.stats.busy){
 				this.memory.stats.busy = 0
