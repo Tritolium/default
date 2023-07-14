@@ -18,7 +18,7 @@ module.exports.loop = function () {
 
 	Game.rooms.E44S33.memory.properties = {
 		minBuilder: 2,
-		minUpgrader: 2,
+		minUpgrader: 4,
 		minRepairer: 1,
 		minDistanceHarvester: 3,
 
