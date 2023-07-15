@@ -35,6 +35,8 @@ var roleBuilder = {
 					creep.memory.target = undefined
 					creep.memory.path = undefined
 				}
+			} else {
+				require('role.repairer').run(creep);
 			}
 			break
 		default:
