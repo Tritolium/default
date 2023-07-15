@@ -6,6 +6,7 @@ module.exports = {
         });
         for(let tower of towers) {
             var target = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+            console.log(`target: ${target}`)
             if (target != undefined) {
                 tower.attack(target);
             }else if(tower.room.memory.hurtCreep != undefined){

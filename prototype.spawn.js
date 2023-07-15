@@ -19,7 +19,7 @@ module.exports = function() {
 		
 		if(this.spawning == null/* && this.memory.spawn == true*/){			//when Spawn is idle and allowed to spawn
 			
-			if (this.room.find(FIND_HOSTILE_CREEPS).length > 0 && defender.length < 2) {
+			if (this.room.find(FIND_HOSTILE_CREEPS).length > 0 && defender.length < 1) {
 				console.log('Stopping all spawnactivity, defending');
 				let energyavailable = this.room.energyAvailable
 				let parts = Math.floor(energyavailable/190)

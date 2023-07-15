@@ -2,7 +2,7 @@ require('prototype.spawn')();
 require('prototype.creep')();
 
 //var managerCreep = require('manager.creep');
-//var managerTower = require('manager.tower')
+var managerTower = require('manager.tower')
 var scheduler = require('scheduler.spawning')
 
 //var construction = require('construction');
@@ -28,10 +28,11 @@ module.exports.loop = function () {
 			'E45S33'
 		]
 	}
-    if(bucket > 1000)
+    if(bucket > 1000) {
 	    scheduler.checkSchedule(HOME)
-	else
-	    console.log('skip schedule')
+		managerTower.run()
+	} else
+	    console.log('skip schedule, tower')
 	   
 	elapsed = Game.cpu.getUsed() - StartCpu;
     console.log(elapsed);
