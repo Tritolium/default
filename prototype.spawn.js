@@ -186,7 +186,7 @@ module.exports = function() {
 			
 			//if this point is reached, spawn remains idle;
 			if(!this.memory.stats)
-							this.memory.stats = {}
+				this.memory.stats = {}
 			
 			if(!this.memory.stats.idle){
 			    this.memory.stats.idle = 0
@@ -230,9 +230,12 @@ module.exports = function() {
 				
 			}
 		} else {
-			if(!this.memory.stats.busy){
+			if(!this.memory.stats)
+				this.memory.stats = {}
+			
+			if(!this.memory.stats.busy)
 				this.memory.stats.busy = 0
-			}
+			
 			this.memory.stats.busy++
 			console.log('busy spawning ' + Memory.creeps[this.spawning.name].role + ' ' + this.spawning.name)
 		}
