@@ -11,8 +11,6 @@ module.exports = function() {
 		
 		//builder
 		var disBuilder = _.filter(Game.creeps, (creep) => creep.memory.role == 'distanceBuilder');
-		
-		var claimer = _.filter(Game.creeps, (creep) => creep.memory.role == 'claimer');
 
 		var defender = _.filter(Game.creeps, (creep) => creep.memory.role == 'defender' && creep.memory.targetRoom == this.room.name);
 		
@@ -159,15 +157,12 @@ module.exports = function() {
 				}
 			}
 			
-			if(this.memory.properties.claim == true){
-				var claimer;
-				//var spawn = this;
-				for(let room of this.room.memory.properties.harvestTargets){
-					claimer = _.filter(Game.creeps, (creep) => creep.memory.role == 'claimer' && creep.memory.home == spawn.room.name && creep.memory.targetRoom == room);
-					if(claimer.length < 1){
-						this.createClaimer(room);
-						return;
-					}
+			var claimer;
+			for(let room of this.room.memory.properties.harvestTargets){
+				claimer = _.filter(Game.creeps, (creep) => creep.memory.role == 'claimer' && creep.memory.home == spawn.room.name && creep.memory.targetRoom == room);
+				if(claimer.length < 1){
+					this.createClaimer(room);
+					return;
 				}
 			}
 				
