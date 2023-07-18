@@ -1,6 +1,15 @@
 var scheduler = require('scheduler.spawning')
 require('util.spawn')()
 
+const constSites = [
+	[-1, -1], [1, -1], [1, 1], [-1, 1],		// first ring
+	[-2, -2], [0, -2], [2, -2], [2, 0],		// second ring
+	[2, 2], [0, 2], [-2, 2], [-2, 0],
+	[-3, -3], [-1, -3], [1, -3], [3, -3],	// third ring
+	[3, -1], [3, 1], [3, 3], [1, 3],
+	[-1, 3], [-3, 3], [-3, 1], [-3, -1]
+]
+
 module.exports = function() {
 	StructureSpawn.prototype.spawn = function(){
 		var energy = this.room.energyCapacityAvailable;
@@ -192,7 +201,22 @@ module.exports = function() {
 			    this.memory.stats.idle = 0
 			}
 			this.memory.stats.idle++
-			console.log('idle')
+			console.log(`idle: ${this.memory.stats.idle}`)
+			if(this.memory.stats.idle % 500 === 0 && this.room.find(FIND_CONSTRUCTION_SITES).length < 3){
+				console.log('Expand Spawn')
+				let spawnPos = this.pos
+				for(site of constSites){
+					let constSitePos = new RoomPosition(spawnPos.x + site[0], spawnPos.y + site[1], this.room.name)
+					let ret = constSitePos.createConstructionSite(STRUCTURE_EXTENSION)
+					if(ret === OK || ret === ERR_FULL || ret === ERR_RCL_NOT_ENOUGH)
+						break
+
+					constSitePos.lookFor(LOOK_STRUCTURES).map(structure => {
+						if(structure.structureType === STRUCTURE_ROAD)
+							structure.destroy()
+					})
+				}
+			}
 
 			// perform evaluation
 			if(!this.room.memory.evaluation)
