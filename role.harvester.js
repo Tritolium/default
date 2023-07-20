@@ -41,7 +41,7 @@ var roleHarvester = {
 		switch(creep.memory.state){
 		case creep.EStatus.DELIVER:
 			creep.acquireTarget();
-			if (creep.memory.target != undefined) {
+			if (creep.memory.target !== undefined) {
 				switch(creep.transfer(Game.getObjectById(creep.memory.target), RESOURCE_ENERGY)){
 					case ERR_NOT_ENOUGH_RESOURCES:
 						creep.memory.state = creep.EStatus.HARVEST
@@ -59,6 +59,18 @@ var roleHarvester = {
 			break;
 		case creep.EStatus.HARVEST:
 			switch(creep.harvest(Game.getObjectById(creep.memory.source))){
+			case OK:
+				if(creep.memory.container === undefined){
+					let container = creep.pos.findInRange(FIND_STRUCTURES, 1).filter(structure => {
+						return structure.structureType === STRUCTURE_CONTAINER
+					})
+					if(container.length > 0)
+						creep.memory.container = container[0].id
+					else
+						break
+				}
+				creep.transfer(Game.getObjectById(creep.memory.container), RESOURCE_ENERGY)
+				break
 			case ERR_NOT_IN_RANGE:
 				creep.moveTo(Game.getObjectById(creep.memory.source))
 				break
