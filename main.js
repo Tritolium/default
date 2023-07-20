@@ -20,13 +20,12 @@ module.exports.loop = function () {
 		minBuilder: 2,
 		minUpgrader: 4,
 		minRepairer: 1,
-		minDistanceHarvester: 3,
+		minDistanceHarvester: 2,
 
 		distanceHarvest: true,
 
 		harvestTargets: [
-			'E45S33',
-			'E45S35'
+			'E45S33'
 		]
 	}
     if(bucket > 1000) {
