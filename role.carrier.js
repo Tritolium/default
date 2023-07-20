@@ -18,6 +18,20 @@ module.exports = {
 					//creep.withdraw(cont, RESOURCE_ENERGY);
 					break;
 				case ERR_NOT_ENOUGH_RESOURCES:
+				    // container is empty, find dropped energy
+				    let resources = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 3)
+				    if(resources.length > 0){
+				        if(creep.pickup(resources[0]) === ERR_NOT_IN_RANGE)
+				            creep.moveTo(resources[0])
+				    } else {
+				        // no dropped energy, look for tombstones
+				        let tombstones = creep.pos.findInRange(FIND_TOMBSTONES, 3)
+				        if(tombstones.length > 0){
+				            if(creep.withdraw(tombstones[0]) === ERR_NOT_IN_RANGE)
+				                creep.moveTo(tombstones[0])
+				        }
+				    }
+				    break
 				case ERR_FULL:
 					creep.memory.state = creep.EStatus.DELIVER;
 					creep.memory.path = undefined;
